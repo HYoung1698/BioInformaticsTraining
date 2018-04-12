@@ -41,13 +41,17 @@ pri -> pre
 
 
 ##RNA-seq
-|Type   |Note|
+asdf
+
+|Type   |Note  |
 | ------|:--:|
 |Default| whole cell polyA RNA-seq, > 200nt:|
 |small| RNA-seq <50 nt|
 |total| rRNA removed, >200nt|
-|nuc.||
-|exRNA-seq||
+|nuc.|  |
+|exRNA-seq| |
+asdf
+
 
 ###exRNA-seq 
 cell free/ MV/ exosom /RNP; short/long
