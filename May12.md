@@ -28,5 +28,8 @@ for i in `ls 00.rawdata | egrep -v 'zip|html'`;
 > samtools fastq 02.mapping/$j/no_rRNA/$j.rRNA_exon.reverseMap.bam > 02.mapping/$j/no_rRNA/$j.rRNA_exon.reverseMap.fastq;
 > cat 02.mapping/$j/no_rRNA/$j.no_rRNA.fastq 02.mapping/$j/no_rRNA/$j.rRNA_exon.reverseMap.fastq > 02.mapping/$j/no_rRNA/$j.rRNA_exon.unmapped.fastq;
 > done
+###make mid mapping
+for j in AfterSurgery_1 AfterSurgery_2 AfterSurgery_3 BeforeSurgery_1 BeforeSurgery_2 BeforeSurgery_3 NC_1 NC_2 NC_3; do echo $j; samtools view -b -F 16 02.mappingnew/$j/midSizeRNA.sam > 02.mappingnew/$j/midSizeRNA/$j.midSizeRNA.clean.bam; done
+for j in AfterSurgery_1 AfterSurgery_2 AfterSurgery_3 BeforeSurgery_1 BeforeSurgery_2 BeforeSurgery_3 NC_1 NC_2 NC_3; do echo $j;  rsem-tbam2gbam src/midSizeRNA 02.mappingnew/$j/midSizeRNA/$j.midSizeRNA.clean.bam  02.mappingnew/$j/midSizeRNA/$j.midSizeRNA.rsem.clean.bam ; echo "complete" $i; done
 
 ```
