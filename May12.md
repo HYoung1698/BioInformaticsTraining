@@ -48,6 +48,30 @@ for j in AfterSurgery_1 AfterSurgery_2 AfterSurgery_3 BeforeSurgery_1 BeforeSurg
 > echo "Collapsed" $j; 
 > done;
 > done
+##map to miRNA
+
+for i in `ls 00.rawdata | egrep -v 'zip|html'`;
+
+do j=${i%.*};
+
+echo $j;
+
+for l in 16 18 20 36;
+
+do echo $l;
+
+# map to miRNA
+
+mkdir 02.mappingnew/$j/miRNA
+
+echo "start map to miRNA" >> log/$j.miRNA.log 2>> log/$j.L${l}.miRNA.err
+
+bowtie2 -p 4 --sensitive-local --no-unal --un 02.mappingnew/$j/miRNA/$j.L${l}.unAligned.fq -x src/miRNA 01.preprocess/$j.cutadapt.L${l}.fastq -S 02.mappingnew/$j/miRNA/$j.L${l}.miRNA.sam >> log/$j.L${l}.miRNA.log 2>> log/$j.L${l}.miRNA.err
+
+done;
+
+done;
+
 
 
 ```
