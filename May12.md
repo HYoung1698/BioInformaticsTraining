@@ -31,5 +31,23 @@ for i in `ls 00.rawdata | egrep -v 'zip|html'`;
 ###make mid mapping
 for j in AfterSurgery_1 AfterSurgery_2 AfterSurgery_3 BeforeSurgery_1 BeforeSurgery_2 BeforeSurgery_3 NC_1 NC_2 NC_3; do echo $j; samtools view -b -F 16 02.mappingnew/$j/midSizeRNA.sam > 02.mappingnew/$j/midSizeRNA/$j.midSizeRNA.clean.bam; done
 for j in AfterSurgery_1 AfterSurgery_2 AfterSurgery_3 BeforeSurgery_1 BeforeSurgery_2 BeforeSurgery_3 NC_1 NC_2 NC_3; do echo $j;  rsem-tbam2gbam src/midSizeRNA 02.mappingnew/$j/midSizeRNA/$j.midSizeRNA.clean.bam  02.mappingnew/$j/midSizeRNA/$j.midSizeRNA.rsem.clean.bam ; echo "complete" $i; done
+for j in AfterSurgery_1 AfterSurgery_2 AfterSurgery_3 BeforeSurgery_1 BeforeSurgery_2 BeforeSurgery_3 NC_1 NC_2 NC_3; do echo $j;  samtools fastq 02.mappingnew/$j/midSizeRNA/$j.midSizeRNA.reverseMap.bam > 02.mappingnew/$j/midSizeRNA/$j.midSizeRNA.reverseMap.fastq; cat 02.mappingnew/$j/midSizeRNA/$j.unAligned.fastq 02.mappingnew/$j/midSizeRNA/$j.midSizeRNA.reverseMap.fastq > 02.mappingnew/$j/midSizeRNA/$j.midSizeRNA.unmapped.fastq; echo "complete" $j; done
+##make large mapping
+
+
+
+
+###Collapsing
+
+for j in AfterSurgery_1 AfterSurgery_2 AfterSurgery_3 BeforeSurgery_1 BeforeSurgery_2 BeforeSurgery_3 NC_1 NC_2 NC_3; do echo $j;
+> for l in 16 18 20 36;
+> do echo $l;
+> cutadapt -u -100 -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC -m $l --trim-n --too-short-output=01.preprocess/$j.L${l}.tooShort.fastq -o 01.preprocess//$j.cutadapt.L${l}.fastq 00.rawdata/$j.fastq;
+> echo "complete" $j;
+> fastx_collapser -i 01.preprocess/$j.cutadapt.L${l}.fastq -o 01.preprocess/$j.cutadapt.L${l}.collapsed.fastq;
+> echo "Collapsed" $j; 
+> done;
+> done
+
 
 ```
